@@ -1,9 +1,12 @@
 package me.whiteship.java8to11.section3;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class App {
 //    public static void main(String[] args) {
@@ -112,9 +115,37 @@ public class App {
             javaClass.add(new OnlineClass(7, "The Java, Code manipulation", true));
             javaClass.add(new OnlineClass(8, "The Java, 8 to 11", false));
 
+
             List<List<OnlineClass>> hyoeunEvents = new ArrayList<>();
             hyoeunEvents.add(springClass);
             hyoeunEvents.add(javaClass);
+
+            /**
+             * 여기서 flatmap써보기
+             * 리스트 + 리스트 => 하나로!!
+             * flatMap(stream넣어주면 됨)
+             */
+            System.out.println("4. 두 수업 목록에 들어잇는 모든 수업 아이디 출력");
+            hyoeunEvents.stream()
+                    .flatMap(Collection::stream)
+                    .forEach(c-> System.out.println(c.getId()));
+
+            System.out.println("5. 10부터 1씩 증가하는 무제한 스트림 중에서 앞에 10개 빼고 최대 10개 까지만");
+            //10부터 1씩증가하는 stream만들기
+            Stream.iterate(10, i -> i + 1)
+                    .skip(10)
+                    .limit(10)
+                    .forEach(System.out::println);
+
+            System.out.println("6. 자바 수업 중에 Test가 들어있는 수업이 있는지 확인");
+            System.out.println(javaClass.stream().anyMatch(c-> c.getTitle().contains("Test")));
+
+            System.out.println("7. 스프링 수업 중에 제목에 spring이 들어간 제목만 모아서 List로 만들기");
+            List<String> collect = springClass.stream()
+                    .filter(c -> c.getTitle().contains("spring"))
+                    .map(OnlineClass::getTitle)
+                    .collect(Collectors.toList());
+            collect.forEach(System.out::println);
 
         }
 }
