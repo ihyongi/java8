@@ -72,8 +72,8 @@ public class App {
         });
         OnlineClass onlineClass1 = optional.orElse(createNewClass());
         System.out.println("onlineClass1 = " + onlineClass1.getTitle());
-//        OnlineClass onlineClass2 = optional.orElseGet(App::createNewClass); //없음 새롭게 만들어라
-//        OnlineClass onlineClass3 = optional.orElseThrow(IllegalArgumentException::new); //없음 에러 던져라
+        OnlineClass onlineClass2 = optional.orElseGet(App::createNewClass); //없음 새롭게 만들어라
+        OnlineClass onlineClass3 = optional.orElseThrow(IllegalArgumentException::new); //없음 에러 던져라
 
         Optional<OnlineClass> onlineClass4 = optional.filter(OnlineClass::isClosed);
         System.out.println("onlineClass4 = " + onlineClass4.isPresent());
